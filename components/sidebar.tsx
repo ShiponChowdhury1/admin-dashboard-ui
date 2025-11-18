@@ -11,6 +11,7 @@ import {
   DialogTitle,
   DialogFooter,
 } from '@/components/ui/dialog';
+import Image from 'next/image';
 
 interface SidebarProps {
   activeTab: string;
@@ -47,9 +48,9 @@ export function Sidebar({ activeTab, setActiveTab, onClose, sidebarOpen, setSide
         <div className="p-6 border-b border-sidebar-border flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-sidebar-primary flex items-center justify-center">
-              <span className="text-sidebar-primary-foreground font-bold text-lg">D</span>
+               <Image src="/logo.png" alt="Logo" width={32} height={32} />
             </div>
-            <span className="font-bold text-lg">Dashboard</span>
+            
           </div>
           <button
             onClick={() => setSidebarOpen?.(!sidebarOpen)}
