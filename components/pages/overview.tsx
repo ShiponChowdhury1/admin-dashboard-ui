@@ -226,98 +226,79 @@ export function Overview() {
         </ResponsiveContainer>
       </Card>
 
-      <Card className="p-6 bg-white border-border shadow-md">
-        <div className="mb-6">
-          {/* Header Row */}
-          <div className="flex justify-between items-center w-full">
-            {/* Left Side */}
-            <h4 className="text-lg font-semibold">User List</h4>
+     <Card className="p-6 bg-white border-border shadow-md">
+  <div className="mb-6 flex justify-between items-center w-full">
+    <h4 className="text-lg font-semibold">User List</h4>
+    <div className="flex items-center gap-3">
+      {/* Search Input */}
+      <div className="flex items-center gap-2 border border-border rounded-lg px-3 py-2">
+        <Search className="w-4 h-4 text-muted-foreground" />
+        <input
+          type="text"
+          placeholder="Search users..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="bg-transparent outline-none text-foreground"
+        />
+      </div>
+      <FilterModal />
+    </div>
+  </div>
 
-            {/* Right Side */}
-            <div className="flex items-center gap-3">
-              {/* Search Input */}
-              <div className="flex items-center gap-2 border border-border rounded-lg px-3 py-2">
-                <Search className="w-4 h-4 text-muted-foreground" />
-                <input
-                  type="text"
-                  placeholder="Search users..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="bg-transparent outline-none text-foreground"
-                />
-              </div>
+  {/* Table */}
+  <div className="overflow-x-auto">
+    <table className="table-fixed w-full border-separate border-spacing-x-4">
+      <thead>
+        <tr className="border-b border-border">
+          <th className="w-[10%] text-left py-3 px-4 font-semibold text-foreground">ID</th>
+          <th className="w-[35%] text-left py-3 px-4 font-semibold text-foreground">User Name</th>
+          <th className="w-[10%] text-left py-3 px-4 font-semibold text-foreground">User Type</th>
+          <th className="w-[35%] text-left py-3 px-4 font-semibold text-foreground">Email</th>
+          <th className="w-[10%] text-left py-3 px-4 font-semibold text-foreground">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {filteredUsers.map((user) => (
+          <tr key={user.id} className="border-b border-border hover:bg-gray-50">
+            <td className="py-4 px-4 text-foreground">{user.id}</td>
+            <td className="py-4 px-4 flex items-center gap-2">
+              <Image
+                src={user.avatar}
+                alt={user.name}
+                width={32}
+                height={32}
+                className="rounded-full"
+              />
+              {user.name}
+            </td>
+            <td className="py-4 px-4">
+              <span
+                className={`px-3 py-1 rounded-full text-sm font-medium ${
+                  user.type === "paid"
+                    ? "bg-green-100 text-green-700"
+                    : "bg-red-100 text-red-700"
+                }`}
+              >
+                {user.type === "paid" ? "Paid" : "Free"}
+              </span>
+            </td>
+            <td className="py-4 px-4 text-foreground">{user.email}</td>
+            <td className="py-4 px-4">
+              <button
+                onClick={() => handleViewUser(user)}
+                className="inline-flex items-center gap-2 px-3 py-1 bg-[#F5F5F5] rounded-full text-black hover:bg-gray-200 transition"
+              >
+                <Eye className="w-4 h-4" />
+                View
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</Card>
 
-              <FilterModal />
-            </div>
-          </div>
-        </div>
-
-        {/* Table */}
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-border">
-                <th className="text-left py-3 px-4 font-semibold text-foreground">
-                  ID
-                </th>
-                <th className="text-left py-3 px-4 font-semibold text-foreground">
-                  User Name
-                </th>
-                <th className="text-left py-3 px-4 font-semibold text-foreground">
-                  User Type
-                </th>
-                <th className="text-left py-3 px-4 font-semibold text-foreground">
-                  Email
-                </th>
-                <th className="text-left py-3 px-4 font-semibold text-foreground">
-                  Action
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredUsers.map((user) => (
-                <tr
-                  key={user.id}
-                  className="border-b border-border hover:bg-gray-50"
-                >
-                  <td className="py-4 px-4 text-foreground">{user.id}</td>
-                  <td className="py-4 px-4 text-foreground flex items-center gap-2">
-                    <Image
-                      src={user.avatar}
-                      alt={user.name}
-                      width={32}
-                      height={32}
-                      className="rounded-full"
-                    />
-                    {user.name}
-                  </td>
-                  <td className="py-4 px-4">
-                    <span
-                      className={`px-3 py-1 rounded-full text-sm font-medium ${
-                        user.type === "paid"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-red-100 text-red-700"
-                      }`}
-                    >
-                      {user.type === "paid" ? "Paid" : "Free"}
-                    </span>
-                  </td>
-                  <td className="py-4 px-4 text-foreground">{user.email}</td>
-                  <td className="py-4 px-4">
-                    <button
-                      onClick={() => handleViewUser(user)}
-                      className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors"
-                    >
-                      <Eye className="w-4 h-4" />
-                      View
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </Card>
 
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className="bg-white">

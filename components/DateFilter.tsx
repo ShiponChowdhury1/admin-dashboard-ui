@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Circle, SlidersHorizontal } from "lucide-react";
+import { SlidersHorizontal } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -11,17 +11,17 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import Image from "next/image";
+import { Calendar } from "@/components/ui/calendar"; // ShadCN Calendar import
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
-export default function FilterModal() {
-  const [selectedFilter, setSelectedFilter] = useState("active");
+export default function DateFilter() {
+  const [selectedFilter, setSelectedFilter] = useState("thisMonth");
+  const [customDate, setCustomDate] = useState<Date | undefined>(new Date());
 
   const filters = [
-    { id: "active", img:'/free.png', label: "Active User" },
-    { id: "unActive", img:'/free.png', label: "UnActive User" },
-    { id: "paid", img:'/free.png', label: "Paid User" },
-    { id: "unpaid", img:'/free.png', label: "Unpaid User" },
+    { id: "thisMonth", label: "This Month" },
+    { id: "thisYear", label: "This Year" },
+    { id: "custom", label: "Custom" },
   ];
 
   return (
@@ -37,9 +37,9 @@ export default function FilterModal() {
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-md">
-        {/* Accessible title (hidden visually) */}
+        {/* Visually hidden title for accessibility */}
         <DialogTitle>
-          <VisuallyHidden>Filter Users</VisuallyHidden>
+          <VisuallyHidden>Date Filter</VisuallyHidden>
         </DialogTitle>
 
         <RadioGroup
@@ -50,20 +50,10 @@ export default function FilterModal() {
           {filters.map((filter) => (
             <div
               key={filter.id}
-              className="flex items-center justify-between p-3 rounded-lg  hover:bg-gray-100 cursor-pointer"
+              className="flex items-center justify-between p-3 rounded-lg border border-gray-300 hover:bg-gray-100 cursor-pointer"
             >
-              <div className="flex items-center gap-3">
-                {filter.img && (
-                  <Image
-                    src={filter.img}
-                    alt={filter.label}
-                    width={30}
-                    height={30}
-                    className="rounded-full"
-                  />
-                )}
-                <span className="font-medium text-foreground">{filter.label}</span>
-              </div>
+              <span className="font-medium text-foreground">{filter.label}</span>
+
               <RadioGroupItem
                 value={filter.id}
                 className="w-5 h-5 border border-gray-300 rounded-full"
@@ -72,10 +62,26 @@ export default function FilterModal() {
           ))}
         </RadioGroup>
 
+        {/* Custom Date Picker */}
+        {selectedFilter === "custom" && (
+          <div className="mt-4">
+            <Calendar
+              mode="single"
+              selected={customDate}
+              onSelect={setCustomDate}
+              className="rounded-md border shadow-sm"
+              captionLayout="dropdown"
+            />
+          </div>
+        )}
+
         <DialogFooter>
           <Button
             onClick={() => {
               console.log("Selected Filter:", selectedFilter);
+              if (selectedFilter === "custom") {
+                console.log("Custom Date:", customDate);
+              }
             }}
           >
             Apply

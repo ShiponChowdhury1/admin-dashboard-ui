@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Search, Eye } from "lucide-react";
 import FilterModal from "../filter";
 import Image from "next/image";
+import DateFilter from "../DateFilter";
 
 const users = [
   {
@@ -222,7 +223,7 @@ export function Payment() {
               />
             </div>
 
-            <FilterModal />
+            <DateFilter />
           </div>
         </div>
       </div>
