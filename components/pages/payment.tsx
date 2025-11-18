@@ -1,83 +1,330 @@
-'use client';
+"use client";
 
-import { Card } from '@/components/ui/card';
-import { CreditCard, Check, AlertCircle } from 'lucide-react';
+"use client";
 
-const transactions = [
-  { id: 1, date: 'Jan 15, 2024', amount: '$99.99', status: 'Completed', method: 'Visa ending in 4242' },
-  { id: 2, date: 'Dec 15, 2023', amount: '$99.99', status: 'Completed', method: 'Visa ending in 4242' },
-  { id: 3, date: 'Nov 15, 2023', amount: '$79.99', status: 'Completed', method: 'Mastercard ending in 5555' },
-  { id: 4, date: 'Oct 15, 2023', amount: '$99.99', status: 'Completed', method: 'Visa ending in 4242' },
+import { useState } from "react";
+import { Card } from "@/components/ui/card";
+import { Search, Eye } from "lucide-react";
+import FilterModal from "../filter";
+import Image from "next/image";
+
+const users = [
+  {
+    id: 1,
+    name: "John Doe",
+    email: "john@example.com",
+    status: "Active",
+    userType: "Paid",
+    joinDate: "Jan 15, 2024",
+    avatar: "/man.png",
+    issueDate: "Jan 15, 2024",
+    amount: "$99.00",
+    progress: "20",
+  },
+  {
+    id: 2,
+    name: "Jane Smith",
+    email: "jane@example.com",
+    status: "Active",
+    userType: "Free",
+    joinDate: "Feb 10, 2024",
+    avatar: "/women.png",
+    issueDate: "Feb 10, 2024",
+    amount: "$0.00",
+    progress: "20",
+  },
+  {
+    id: 3,
+    name: "Mike Johnson",
+    email: "mike@example.com",
+    status: "Inactive",
+    userType: "Paid",
+    joinDate: "Mar 5, 2024",
+    avatar: "/isMan.png",
+    issueDate: "Mar 5, 2024",
+    amount: "$99.00",
+    progress: "20",
+  },
+  {
+    id: 4,
+    name: "Sarah Williams",
+    email: "sarah@example.com",
+    status: "Active",
+    userType: "Free",
+    joinDate: "Apr 12, 2024",
+    avatar: "/man.png",
+    issueDate: "Apr 12, 2024",
+    amount: "$0.00",
+    progress: "20",
+  },
+  {
+    id: 5,
+    name: "Tom Brown",
+    email: "tom@example.com",
+    status: "Active",
+    userType: "Paid",
+    joinDate: "May 8, 2024",
+    avatar: "/isMan.png",
+    issueDate: "May 8, 2024",
+    amount: "$199.00",
+    progress: "20",
+  },
+  {
+    id: 5,
+    name: "Tom Brown",
+    email: "tom@example.com",
+    status: "Active",
+    userType: "Paid",
+    joinDate: "May 8, 2024",
+    avatar: "/isMan.png",
+    issueDate: "May 8, 2024",
+    amount: "$199.00",
+    progress: "20",
+  },
+  {
+    id: 5,
+    name: "Tom Brown",
+    email: "tom@example.com",
+    status: "Active",
+    userType: "Paid",
+    joinDate: "May 8, 2024",
+    avatar: "/isMan.png",
+    issueDate: "May 8, 2024",
+    amount: "$199.00",
+    progress: "20",
+  },
+  {
+    id: 5,
+    name: "Tom Brown",
+    email: "tom@example.com",
+    status: "Active",
+    userType: "Paid",
+    joinDate: "May 8, 2024",
+    avatar: "/isMan.png",
+    issueDate: "May 8, 2024",
+    amount: "$199.00",
+    progress: "20",
+  },
 ];
 
 export function Payment() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedUser, setSelectedUser] = useState<
+    (typeof users)[number] | null
+  >(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const filteredUsers = users.filter(
+    (user) =>
+      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  interface User {
+    id: number;
+    name: string;
+    email: string;
+    status: string;
+    userType: string;
+    joinDate: string;
+    avatar: string;
+    issueDate: string;
+    amount: string;
+    progress: string;
+    Image?: string;
+  }
+
+  const handleViewUser = (user: User): void => {
+    setSelectedUser(user);
+    setIsModalOpen(true);
+  };
+
+  const totalUsers = users.length;
+  const paidUsers = users.filter((u) => u.userType === "Paid").length;
+  const freeUsers = users.filter((u) => u.userType === "Free").length;
+  const avgProgress =
+    users.reduce((sum, u) => sum + parseInt(u.progress), 0) / users.length;
+  const totalAmount = users.reduce((sum, u) => {
+    const amountNumber = parseFloat(u.amount.replace("$", "")) || 0;
+    return sum + amountNumber;
+  }, 0);
+
   return (
     <div className="p-8 space-y-8">
       <div>
-        <h1 className="text-4xl font-bold text-foreground">Payments</h1>
-        <p className="text-muted-foreground mt-2">Manage your billing and payment methods.</p>
+        <h1 className="text-4xl font-bold text-foreground">User List</h1>
       </div>
 
-      {/* Payment Method */}
-      <Card className="p-6 bg-card border-border">
-        <h2 className="text-lg font-bold text-foreground mb-4">Payment Method</h2>
-        <div className="flex items-center justify-between p-4 bg-sidebar rounded-lg border border-border">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* Total Users */}
+        <Card className="bg-white border border-gray-200 p-6">
+          <div className="flex items-center justify-between">
+            <div className="text-[#000000] text-sm font-medium">
+              Total Payment
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 mt-2">
+            <div className="text-3xl font-bold text-foreground">
+              {totalUsers}
+            </div>
+          </div>
+        </Card>
+
+        {/* Paid Users */}
+        <Card className="bg-white border border-gray-200 p-6">
+          <div className="flex items-center justify-between">
+            <div className="text-[#000000] text-sm font-medium">
+              Paid Payment
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 mt-2">
+            <div className="text-3xl font-bold text-foreground">
+              {freeUsers}
+            </div>
+          </div>
+        </Card>
+
+        {/* Free Users */}
+        <Card className="bg-white border border-gray-200 p-6">
+          <div className="flex items-center justify-between">
+            <div className="text-[#000000] text-sm font-medium">
+              Cancelled Payment
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 mt-2">
+            <div className="text-3xl font-bold text-foreground ">
+              {paidUsers}
+            </div>
+          </div>
+        </Card>
+      </div>
+
+      <div className="mb-6">
+        {/* Header Row */}
+        <div className="flex justify-between items-center w-full">
+          {/* Left Side */}
+          <h4 className="text-lg font-semibold">User List</h4>
+
+          {/* Right Side */}
           <div className="flex items-center gap-3">
-            <CreditCard className="w-6 h-6 text-accent" />
-            <div>
-              <p className="font-medium text-foreground">Visa Card</p>
-              <p className="text-sm text-muted-foreground">Ending in 4242</p>
+            {/* Search Input */}
+            <div className="flex items-center gap-2 border border-border rounded-lg px-3 py-2">
+              <Search className="w-4 h-4 text-muted-foreground" />
+              <input
+                type="text"
+                placeholder="Search users..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="bg-transparent outline-none text-foreground"
+              />
             </div>
-          </div>
-          <span className="text-sm text-accent font-medium">Default</span>
-        </div>
-      </Card>
 
-      {/* Subscription Status */}
-      <Card className="p-6 bg-card border-border">
-        <h2 className="text-lg font-bold text-foreground mb-4">Subscription Status</h2>
-        <div className="space-y-4">
-          <div className="flex items-center justify-between p-4 bg-sidebar rounded-lg border border-border">
-            <div className="flex items-center gap-3">
-              <Check className="w-6 h-6 text-accent" />
-              <div>
-                <p className="font-medium text-foreground">Professional Plan</p>
-                <p className="text-sm text-muted-foreground">Renews on Feb 15, 2024</p>
-              </div>
-            </div>
-            <span className="text-sm font-bold text-accent">Active</span>
+            <FilterModal />
           </div>
         </div>
-      </Card>
-
-      {/* Transaction History */}
-      <Card className="bg-card border-border overflow-hidden">
-        <div className="p-6 border-b border-border">
-          <h2 className="text-lg font-bold text-foreground">Transaction History</h2>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full">
+      </div>
+      <Card className="bg-white overflow-hidden w-full">
+        <div className="overflow-x-auto w-full">
+          <table className="w-full border-collapse table-fixed">
             <thead>
-              <tr className="border-b border-border bg-sidebar/50">
-                <th className="px-6 py-4 text-left text-sm font-bold text-foreground">Date</th>
-                <th className="px-6 py-4 text-left text-sm font-bold text-foreground">Amount</th>
-                <th className="px-6 py-4 text-left text-sm font-bold text-foreground">Status</th>
-                <th className="px-6 py-4 text-left text-sm font-bold text-foreground">Method</th>
+              <tr className="bg-white">
+                {/* ID - 10% */}
+                <th className="w-[10%] px-2 py-2">
+                  <div className="bg-[#F5F5F5] px-4 py-2 font-medium text-sm rounded-l-lg text-left">
+                    ID
+                  </div>
+                </th>
+
+                {/* Name - 35% */}
+                <th className="w-[35%] px-2 py-2">
+                  <div className="bg-[#F5F5F5] px-4 py-2 font-medium text-sm text-left rounded-none">
+                    Name
+                  </div>
+                </th>
+
+                {/* User Type - 10% */}
+                <th className="w-[10%] px-2 py-2">
+                  <div className="bg-[#F5F5F5] px-4 py-2 font-medium text-sm text-left rounded-none">
+                    User Type
+                  </div>
+                </th>
+
+                {/* Email - 35% */}
+                <th className="w-[35%] px-2 py-2">
+                  <div className="bg-[#F5F5F5] px-4 py-2 font-medium text-sm text-left rounded-none">
+                    Email
+                  </div>
+                </th>
+
+                {/* Amount - 10% */}
+                <th className="w-[10%] px-2 py-2">
+                  <div className="bg-[#F5F5F5] px-4 py-2 font-medium text-sm rounded-r-lg text-left">
+                    Amount
+                  </div>
+                </th>
               </tr>
             </thead>
-            <tbody>
-              {transactions.map((txn) => (
-                <tr key={txn.id} className="border-b border-border hover:bg-sidebar/30 transition-colors">
-                  <td className="px-6 py-4 text-foreground font-medium">{txn.date}</td>
-                  <td className="px-6 py-4 text-foreground font-bold">{txn.amount}</td>
-                  <td className="px-6 py-4">
-                    <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-accent/20 text-accent">
-                      {txn.status}
+
+            <tbody className="divide-y divide-gray-100">
+              {filteredUsers.map((user, index) => (
+                <tr
+                  key={`${user.id}-${index}`}
+                  className="hover:bg-gray-50 transition-colors"
+                >
+                  <td className="px-2 py-3 font-medium">{user.id}</td>
+
+                  <td className="px-2 py-3">
+                    <div className="flex items-center  rounded-full px-2 py-1">
+                      <Image
+                        src={user.avatar}
+                        alt={user.name}
+                        width={40}
+                        height={40}
+                        className="rounded-full"
+                      />
+                      <span className="font-medium">{user.name}</span>
+                    </div>
+                  </td>
+
+                  <td className="px-2 py-3">
+                    <span
+                      className={`px-3 py-1 rounded-full text-xs font-medium ${
+                        user.userType === "Paid"
+                          ? "bg-green-100 text-green-700"
+                          : "bg-red-100 text-red-700"
+                      }`}
+                    >
+                      {user.userType}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-muted-foreground">{txn.method}</td>
+
+                  <td className=" py-3">
+                    <div className=" rounded-full ">{user.email}</div>
+                  </td>
+
+                  <td className=" py-3 text-center font-medium">
+                    <div className=" rounded-full">{user.amount}</div>
+                  </td>
                 </tr>
               ))}
+
+              {/* Total amount row */}
+              <tr className="bg-gray-100 font-semibold">
+  {/* Left side: Total Amount text */}
+  <td colSpan={4} className="px-6 py-4 text-left">
+    Total Amount:
+  </td>
+
+  {/* Right side: Total Amount value */}
+  <td className="px-6 py-4 text-right">
+    <div className="rounded-full">
+      ${totalAmount.toFixed(2)}
+    </div>
+  </td>
+</tr>
             </tbody>
           </table>
         </div>
