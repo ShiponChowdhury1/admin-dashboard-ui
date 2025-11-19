@@ -1,10 +1,9 @@
 'use client';
 import { useMemo } from "react";
-import { User } from "./UserTable";
 import UserStatsCard from "./UserStatsCard";
 import UserTable from "./UserTable";
-
-const users: User[] = [ /* এখানে তোমার users array */ ];
+import { users } from "@/data/users";
+// ✅ Import here
 
 export default function UserListData() {
   const totalUsers = users.length;
@@ -18,6 +17,8 @@ export default function UserListData() {
     { label: "Free Users", value: freeUsers, growth: avgProgress },
   ], [totalUsers, paidUsers, freeUsers, avgProgress]);
 
+  const transformedUsers = useMemo(() => users.map(u => ({ ...u, amount: String(u.amount) })), []);
+
   return (
     <div className="p-8 space-y-8">
       <h1 className="text-4xl font-bold text-foreground">User List</h1>
@@ -26,7 +27,7 @@ export default function UserListData() {
         {stats.map((stat, idx) => <UserStatsCard key={idx} {...stat} />)}
       </div>
 
-      <UserTable users={users} />
+      <UserTable users={transformedUsers} />
     </div>
   );
 }

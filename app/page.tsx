@@ -2,16 +2,12 @@
 
 import { useState } from 'react';
 import { Sidebar } from '@/components/sidebar';
-
-
-
-import { Profile } from '@/components/pages/profile';
 import { Menu } from 'lucide-react';
 import Package from '@/components/pages/package';
 import PaymentPage from '@/components/pages/payment';
 import OverviewPage from '@/components/pages/overview';
-import { UserList } from '@/components/pages/userList';
-
+import UserListData from '@/components/userList/UserList';
+import ProfilePage from '@/components/pages/profile';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('overview');
@@ -22,13 +18,13 @@ export default function Home() {
       case 'overview':
         return <OverviewPage />;
       case 'users':
-        return <UserList />;
+        return <UserListData />;
       case 'package':
         return <Package />;
       case 'payment':
         return <PaymentPage />;
       case 'profile':
-        return <Profile />;
+        return <ProfilePage />;
       default:
         return <OverviewPage />;
     }
