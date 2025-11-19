@@ -89,10 +89,10 @@ export function Sidebar({
                   setActiveTab(item.id);
                   onClose?.();
                 }}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                   activeTab === item.id
-                    ? 'bg-[#2d3748] text-white ho'
-                    : 'text-sidebar-foreground hover:bg-sidebar-accent'
+                    ? 'bg-sidebar-accent text-sidebar-accent-foreground shadow-md'
+                    : 'text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground'
                 }`}
               >
                 <Icon className="w-5 h-5" />
@@ -106,10 +106,14 @@ export function Sidebar({
         <div className="border-t border-sidebar-border p-4 space-y-2">
           <button
             onClick={handleProfileClick}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sidebar-foreground hover:bg-sidebar-accent transition-colors"
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+              activeTab === 'profile'
+                ? 'bg-sidebar-accent text-sidebar-accent-foreground shadow-md'
+                : 'text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground'
+            }`}
           >
             <User className="w-5 h-5" />
-            <span className="font-medium ">Profile</span>
+            <span className="font-medium">Profile</span>
           </button>
 
           <button
