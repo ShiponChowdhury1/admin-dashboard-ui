@@ -11,7 +11,7 @@ interface ViewModalProps {
   status: string;
 }
 
-export function ViewModal({ open, onOpenChange, itemName, status }: ViewModalProps) {
+export function UserDetailsModal({ open, onOpenChange, itemName, status }: ViewModalProps) {
   const [currentStatus, setCurrentStatus] = useState(status);
 
   const handleApprove = () => setCurrentStatus('Approved');

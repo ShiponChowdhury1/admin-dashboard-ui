@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { Tabs, TabType } from '@/components/Tabs';
-import { RequestsTable } from '@/components/RequestsTable';
+import { Tabs, TabType } from '@/components/package/Tabs';
 import { RequestItem } from '@/components/types/request';
+import { PackageRequests } from '../package/PackageRequests';
 
 export default function PackagePage() {
   const [activeTab, setActiveTab] = useState<TabType>('All');
@@ -25,7 +25,7 @@ export default function PackagePage() {
     <div className="p-8 space-y-8">
       <h1 className="text-4xl font-bold text-foreground">Items Request</h1>
       <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
-      <RequestsTable data={usersData} activeTab={activeTab} />
+      <PackageRequests data={usersData} activeTab={activeTab} />
     </div>
   );
 }

@@ -2,9 +2,11 @@
 
 import { Eye } from 'lucide-react';
 import { useState } from 'react';
-import { ViewModal } from './ViewModal';
+
+
 import { TabType } from './Tabs';
-import { RequestItem } from './types';
+import { UserDetailsModal } from './UserDetailsModal';
+import { RequestItem } from '../types';
 
 
 interface RequestsTableProps {
@@ -12,7 +14,7 @@ interface RequestsTableProps {
   activeTab: TabType;
 }
 
-export function RequestsTable({ data, activeTab }: RequestsTableProps) {
+export function PackageRequests({ data, activeTab }: RequestsTableProps) {
   const filteredData = activeTab === 'All' ? data : data.filter(d => d.status === activeTab);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<RequestItem | null>(null);
@@ -78,7 +80,7 @@ export function RequestsTable({ data, activeTab }: RequestsTableProps) {
       </div>
 
       {selectedItem && (
-        <ViewModal
+        <UserDetailsModal
           open={modalOpen}
           onOpenChange={setModalOpen}
           itemName={selectedItem.item}

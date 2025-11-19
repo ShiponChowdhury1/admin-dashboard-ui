@@ -13,3 +13,4 @@ export interface User {
   progress: string;
   Image?: string;
 }
+

@@ -6,8 +6,9 @@ import { Menu } from 'lucide-react';
 import Package from '@/components/pages/package';
 import PaymentPage from '@/components/pages/payment';
 import OverviewPage from '@/components/pages/overview';
-import UserListData from '@/components/userList/UserList';
 import ProfilePage from '@/components/pages/profile';
+import UserList from '@/components/pages/userListPage';
+import UserListPage from '@/components/pages/userListPage';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('overview');
@@ -18,7 +19,7 @@ export default function Home() {
       case 'overview':
         return <OverviewPage />;
       case 'users':
-        return <UserListData />;
+        return <UserListPage />;
       case 'package':
         return <Package />;
       case 'payment':

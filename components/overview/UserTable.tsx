@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { Eye } from "lucide-react";
+import { Eye, Search } from "lucide-react";
 import { useState } from "react";
 import UserModal from "./UserModal";
 
@@ -26,13 +26,16 @@ export default function UserTable({ users }: UserTableProps) {
     <>
       <div className="mb-6 flex justify-between items-center">
         <h4 className="text-lg font-semibold">User List</h4>
-        <input
-          type="text"
-          placeholder="Search users..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="px-3 py-2 border border-border rounded-lg"
-        />
+       <div className="flex items-center gap-2 bg-white border rounded-lg px-3 py-2 shadow-sm w-full max-w-sm">
+      <Search className="size-5 text-gray-500" />
+      <input
+        type="text"
+        placeholder="Search user..."
+        className="outline-none w-full"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+    </div>
       </div>
 
       <div className="overflow-x-auto">
