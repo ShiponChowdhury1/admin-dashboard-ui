@@ -19,7 +19,7 @@ const incomeData = [
   { date: "12 Sep", income: 15000 },
   { date: "14 Sep", income: 18000 },
   { date: "16 Sep", income: 14000 },
-  { date: "18 Sep", income: 20000 },
+  { date: "18 Sep", income: 29000 },
   { date: "20 Sep", income: 17000 },
   { date: "22 Sep", income: 22000 },
   { date: "24 Sep", income: 19000 },
