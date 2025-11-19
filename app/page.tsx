@@ -10,7 +10,7 @@ import { Menu } from 'lucide-react';
 import Package from '@/components/pages/package';
 import PaymentPage from '@/components/pages/payment';
 import OverviewPage from '@/components/pages/overview';
-import { UserList } from '@/components/pages/user-list';
+import { UserList } from '@/components/pages/userList';
 
 
 export default function Home() {
