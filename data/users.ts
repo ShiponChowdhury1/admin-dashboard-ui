@@ -1,12 +1,16 @@
-'use client';
+import React from "react";
+import { RequestItem, User } from "@/components/types";
+import { UserCheck, UserX, CreditCard, CreditCardIcon } from "lucide-react";
 
-import { useState } from 'react';
-import { Tabs, TabType } from '@/components/Tabs';
-import { RequestsTable } from '@/components/RequestsTable';
-import { RequestItem } from '@/components/types/request';
+export const users: User[] = [
+  { id: 1, name: 'John Doe', email: 'john@example.com', status: 'Active', userType: 'Paid', joinDate: 'Jan 15, 2024', avatar: '/man.png', issueDate: 'Jan 15, 2024', amount: 99.00, progress: '20' },
+  { id: 2, name: 'Jane Smith', email: 'jane@example.com', status: 'Active', userType: 'Free', joinDate: 'Feb 10, 2024', avatar: '/women.png', issueDate: 'Feb 10, 2024', amount: 22.00, progress: '20' },
+  { id: 3, name: 'Mike Johnson', email: 'mike@example.com', status: 'Inactive', userType: 'Paid', joinDate: 'Mar 5, 2024', avatar: '/isMan.png', issueDate: 'Mar 5, 2024', amount: 99.00, progress: '20' },
+  { id: 4, name: 'Sarah Williams', email: 'sarah@example.com', status: 'Active', userType: 'Free', joinDate: 'Apr 12, 2024', avatar: '/man.png', issueDate: 'Apr 12, 2024', amount: 0.00, progress: '20' },
+  { id: 5, name: 'Tom Brown', email: 'tom@example.com', status: 'Active', userType: 'Paid', joinDate: 'May 8, 2024', avatar: '/isMan.png', issueDate: 'May 8, 2024', amount: 199.00, progress: '20' },
+];
 
-export default function PackagePage() {
-  const [activeTab, setActiveTab] = useState<TabType>('All');
+
 
   const usersData: RequestItem[] = [
     { id: 1, requestUser: 'Alex Smith', item: 'Laptop', model: 'Dell XPS 13', nsn: '1234-5678', lin: 'A12', eic: 'EIC-54', manual: 'Tech Doc A', status: 'Pending' },
@@ -21,11 +25,5 @@ export default function PackagePage() {
     { id: 10, requestUser: 'Jacob Ray', item: 'Headphone', model: 'Sony WH-1000XM4', nsn: '4455-2211', lin: 'J88', eic: 'EIC-22', manual: 'User Manual J', status: 'Approved' }
   ];
 
-  return (
-    <div className="p-8 space-y-8">
-      <h1 className="text-4xl font-bold text-foreground">Items Request</h1>
-      <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
-      <RequestsTable data={usersData} activeTab={activeTab} />
-    </div>
-  );
-}
+
+

@@ -2,12 +2,16 @@
 
 import { useState } from 'react';
 import { Sidebar } from '@/components/sidebar';
-import { Overview } from '@/components/pages/overview';
-import { UserList } from '@/components/pages/user-list';
-import { Package } from '@/components/pages/package';
-import { Payment } from '@/components/pages/payment';
+
+
+
 import { Profile } from '@/components/pages/profile';
 import { Menu } from 'lucide-react';
+import Package from '@/components/pages/package';
+import PaymentPage from '@/components/pages/payment';
+import OverviewPage from '@/components/pages/overview';
+import { UserList } from '@/components/pages/user-list';
+
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('overview');
@@ -16,17 +20,17 @@ export default function Home() {
   const renderContent = () => {
     switch (activeTab) {
       case 'overview':
-        return <Overview />;
+        return <OverviewPage />;
       case 'users':
         return <UserList />;
       case 'package':
         return <Package />;
       case 'payment':
-        return <Payment />;
+        return <PaymentPage />;
       case 'profile':
         return <Profile />;
       default:
-        return <Overview />;
+        return <OverviewPage />;
     }
   };
 
