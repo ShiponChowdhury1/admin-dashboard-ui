@@ -145,7 +145,7 @@ export function Sidebar({
       <Button
         variant="outline"
         onClick={() => setShowLogoutDialog(false)}
-        className="w-full py-8 text-foreground font-medium hover:bg-gray-100 hover:text-black"
+        className="w-full py-6 text-foreground font-medium hover:bg-gray-100 hover:text-black"
       >
         Cancel
       </Button>
