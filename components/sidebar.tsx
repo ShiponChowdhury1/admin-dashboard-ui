@@ -71,7 +71,7 @@ export function Sidebar({
 
           <button
             onClick={() => setSidebarOpen?.(!sidebarOpen)}
-            className="md:hidden p-1 hover:bg-sidebar-accent rounded-lg transition-colors"
+            className="md:hidden p-1 hover:bg-sidebar-accent rounded-lg transition-colors text-[#ffffff] hover:text-white"
           >
             <X className="w-5 h-5" />
           </button>
@@ -91,7 +91,7 @@ export function Sidebar({
                 }}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                   activeTab === item.id
-                    ? 'bg-[#2d3748] text-white'
+                    ? 'bg-[#2d3748] text-white ho'
                     : 'text-sidebar-foreground hover:bg-sidebar-accent'
                 }`}
               >
@@ -109,7 +109,7 @@ export function Sidebar({
             className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sidebar-foreground hover:bg-sidebar-accent transition-colors"
           >
             <User className="w-5 h-5" />
-            <span className="font-medium">Profile</span>
+            <span className="font-medium ">Profile</span>
           </button>
 
           <button
