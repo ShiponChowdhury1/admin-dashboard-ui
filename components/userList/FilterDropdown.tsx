@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { SlidersHorizontal, UserCheck, UserX, CreditCard, Wallet } from "lucide-react";
+import { SlidersHorizontal, UserCheck, UserX, CreditCard, Wallet, Users } from "lucide-react";
 
 type FilterDropdownProps = {
   value: string;
@@ -12,6 +12,7 @@ export default function FilterDropdown({ value, onChange }: FilterDropdownProps)
   const [isOpen, setIsOpen] = useState(false);
 
   const filters = [
+    { label: "All", value: "All", icon: Users },
     { label: "Active User", value: "Active", icon: UserCheck },
     { label: "Inactive User", value: "Inactive", icon: UserX },
     { label: "Paid User", value: "Paid", icon: CreditCard },

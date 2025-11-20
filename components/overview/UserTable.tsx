@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { Eye, Search, SlidersHorizontal, UserCheck, UserX, CreditCard, Wallet } from "lucide-react";
+import { Eye, Search, SlidersHorizontal, UserCheck, UserX, CreditCard, Wallet, Users } from "lucide-react";
 import { useState } from "react";
 import UserModal from "./UserModal";
 
@@ -10,12 +10,13 @@ interface UserTableProps {
 
 export default function UserTable({ users }: UserTableProps) {
   const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState("paid"); // Default to paid
+  const [filter, setFilter] = useState("all"); // Default to all
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<any>(null);
   const [modalOpen, setModalOpen] = useState(false);
 
   const filters = [
+    { label: "All", value: "all", icon: Users },
     { label: "Active User", value: "active", icon: UserCheck },
     { label: "Inactive User", value: "inactive", icon: UserX },
     { label: "Paid User", value: "paid", icon: CreditCard },
@@ -27,9 +28,11 @@ export default function UserTable({ users }: UserTableProps) {
       user.name.toLowerCase().includes(search.toLowerCase()) ||
       user.email.toLowerCase().includes(search.toLowerCase());
     
-    // Filter by type (paid/free) or status (active/inactive)
+    // Filter by type (paid/free) or status (active/inactive) or all
     let matchesFilter = true;
-    if (filter === "paid" || filter === "free") {
+    if (filter === "all") {
+      matchesFilter = true; // Show all users
+    } else if (filter === "paid" || filter === "free") {
       matchesFilter = user.type === filter;
     } else if (filter === "active" || filter === "inactive") {
       matchesFilter = user.status === filter;
@@ -136,7 +139,13 @@ export default function UserTable({ users }: UserTableProps) {
                   {user.name}
                 </td>
                 <td className="px-4 py-4">
-                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${user.type === "paid" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}>
+                  <span
+                    className="px-3 py-1 rounded-full text-sm font-medium"
+                    style={{
+                      backgroundColor: user.status === "active" ? "#2874FF1A" : "#88939F1A",
+                      color: user.status === "active" ? "#2874FF" : "#88939F"
+                    }}
+                  >
                     {user.type === "paid" ? "Paid" : "Free"}
                   </span>
                 </td>

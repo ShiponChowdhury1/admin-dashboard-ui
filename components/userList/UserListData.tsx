@@ -11,7 +11,7 @@ import { User } from "../types";
 
 export default function UserListData() {
   const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState("Active"); // Default to Active
+  const [filter, setFilter] = useState("All"); // Default to All
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   // Stats calculations
@@ -39,9 +39,11 @@ export default function UserListData() {
         user.name.toLowerCase().includes(search.toLowerCase()) ||
         user.email.toLowerCase().includes(search.toLowerCase());
       
-      // Filter by status (Active/Inactive) or userType (Paid/Free)
+      // Filter by status (Active/Inactive) or userType (Paid/Free) or All
       let matchesFilter = true;
-      if (filter === "Active" || filter === "Inactive") {
+      if (filter === "All") {
+        matchesFilter = true; // Show all users
+      } else if (filter === "Active" || filter === "Inactive") {
         matchesFilter = user.status === filter;
       } else if (filter === "Paid" || filter === "Free") {
         matchesFilter = user.userType === filter;

@@ -38,12 +38,22 @@ export default function UserTable({ users, onView }: UserTableProps) {
 
             <td className="p-3">{user.userType}</td>
             <td className="p-3">{user.email}</td>
-            <td className="p-3">{user.status}</td>
+            <td className="p-3">
+              <span
+                className="px-3 py-1 rounded-full text-sm font-medium"
+                style={{
+                  backgroundColor: user.status === "Active" ? "#2874FF1A" : "#88939F1A",
+                  color: user.status === "Active" ? "#2874FF" : "#88939F"
+                }}
+              >
+                {user.status}
+              </span>
+            </td>
 
             <td className="p-3">
               <button 
                 onClick={() => onView(user)}
-                className="px-3 py-1 bg-[#88939F1A]  rounded-md"
+                className="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
               >
                 View
               </button>
