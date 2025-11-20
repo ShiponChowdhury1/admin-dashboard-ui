@@ -1,6 +1,6 @@
 'use client';
 
-export type TabType = 'All' | 'Approved' | 'Pending' | 'Rejected';
+import { TabType } from '../types/package';
 
 interface TabsProps {
   activeTab: TabType;

@@ -1,2 +1,3 @@
-date option 
-then filter option
+1. _overview page ---> incomeChart.js file done ----> Overview.tsx file -----> StateCard.tsx file ---> UserModal.tsx file ---->UserTable.jsx file done ok
+
+2. payment page ---> dataFilter.tsx file done -----> Payment.tsx file ----> Payment functions file ok paymentState file ok paymentTable ok  
