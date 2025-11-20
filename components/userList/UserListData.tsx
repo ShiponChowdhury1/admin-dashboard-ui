@@ -11,13 +11,15 @@ import { User } from "../types";
 
 export default function UserListData() {
   const [search, setSearch] = useState("");
-  const [typeFilter, setTypeFilter] = useState("All");
+  const [filter, setFilter] = useState("Active"); // Default to Active
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   // Stats calculations
   const totalUsers = users.length;
   const paidUsers = users.filter((u) => u.userType === "Paid");
   const freeUsers = users.filter((u) => u.userType === "Free");
+  const activeUsers = users.filter((u) => u.status === "Active");
+  const inactiveUsers = users.filter((u) => u.status === "Inactive");
 
   // Calculate average progress per type (from users data)
   const avgProgress = (arr: User[]) => {
@@ -30,16 +32,24 @@ export default function UserListData() {
   const paidProgress = avgProgress(paidUsers);
   const freeProgress = avgProgress(freeUsers);
 
-  // Filtered Users
+  // Filtered Users - supports both status and userType
   const filteredUsers = useMemo(() => {
     return users.filter((user) => {
       const matchesSearch =
         user.name.toLowerCase().includes(search.toLowerCase()) ||
         user.email.toLowerCase().includes(search.toLowerCase());
-      const matchesType = typeFilter === "All" || user.userType === typeFilter;
-      return matchesSearch && matchesType;
+      
+      // Filter by status (Active/Inactive) or userType (Paid/Free)
+      let matchesFilter = true;
+      if (filter === "Active" || filter === "Inactive") {
+        matchesFilter = user.status === filter;
+      } else if (filter === "Paid" || filter === "Free") {
+        matchesFilter = user.userType === filter;
+      }
+      
+      return matchesSearch && matchesFilter;
     });
-  }, [search, typeFilter]);
+  }, [search, filter]);
 
   return (
     <div className="space-y-8">
@@ -77,7 +87,7 @@ export default function UserListData() {
         <h3 className="text-xl font-semibold text-[24px]">User List</h3>
         <div className="flex items-center gap-3 ml-auto">
           <SearchBar value={search} onChange={setSearch} />
-          <FilterDropdown value={typeFilter} onChange={setTypeFilter} />
+          <FilterDropdown value={filter} onChange={setFilter} />
         </div>
       </div>
 
